@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <p>EJS Welcome to <%= title %></p>
+  <a href="javascript:">send -> hello</a>
+</body>
+<script>
+  var socket = io.connect('http://localhost:3000');
+  socket.on('connect', function () {
+    socket.on('getMessage', function (data) {
+      console.log(data)
+      // socket.emit('my other event', { my: 'data' });
+    });
+
+    document.querySelector('a').addEventListener('click', () => {
+      socket.emit('sendMessage', { message: 'hello' })
+      // socket.send({ message: 'hello' })
+    })
+  });
+
+</script>
+
+</html>
